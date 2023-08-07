@@ -1,0 +1,32 @@
+/* Data Analysis of SyntheticInfantHealthData*/
+
+-- Viewing the data of the table
+SELECT * FROM SyntheticInfantHealthData;;
+
+--Seeing how much is within the dataset
+SELECT COUNT(*) from SyntheticInfantHealthData;
+
+--Finding the count of diseases and ordering them by descending order
+SELECT disease, COUNT(*) as diseases_count from SyntheticInfantHealthData group by disease order by diseases_count DESC;
+
+--Calculate the percentage of patients with Birth Asphyxia 
+SELECT COUNT(*) AS num_asphyxia, (COUNT(*) * 100)/(SELECT COUNT(*) FROM SyntheticInfantHealthData) as percentage from SyntheticInfantHealthData WHERE birthasphyxia = 'yes';
+
+--Returning patients with Left Ventricular Hypertrophy
+SELECT * FROM SyntheticInfantHealthData where LVH = 'yes'
+
+--Finding the patients with grunting and hypoxia in 02 and severe Hypoxia 
+SELEct * FROM SyntheticInfantHealthData where grunting = 'yes' and hypoxiaino2 = 'Severe';
+
+-- Adjusting the data from text to int, to preform analysis
+SELECT
+	case lungflow
+    	when 'Low' then 1
+        when 'Normal' then 2 
+        when 'High' then 3 
+   	end as numerical_lung
+from SyntheticInfantHealthData;
+
+-- Finding the avg lung flow for each disease
+SELECT disease, AVG(lungflow) as avg_lungflow from SyntheticInfantHealthData group by disease;
+
